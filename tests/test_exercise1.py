@@ -15,7 +15,7 @@ def test_r1_is_even_at_4():
 
 # bug report 2
 def test_r2_rectangle_area_correct_area():
-    assert rectangle_area(3, 4) == 12
+    assert rectangle_area(5, 3) == 15
 
 
 # bug report 3

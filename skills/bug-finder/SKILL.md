@@ -33,6 +33,15 @@ Check every function against its docstring, one by one:
   and what it should return. For security bugs, say what an attacker could
   pass and what happens.
 
+## Extra rules (added after round 4 failed)
+
+- A password, key or token written directly in the code (e.g. ADMIN_PASSWORD = "admin123")
+  IS a bug. Line = the assignment line. Example: check_admin("admin123") returns True,
+  expected False (the password must come from os.environ).
+  Fix: ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "")
+- Before writing a report, run the Example in your head on the CURRENT code.
+  If the current code already gives the expected result, it is NOT a bug: drop the report.
+
 ## Output format
 
 Write only the reports, separated by one blank line. No intro, no summary.
