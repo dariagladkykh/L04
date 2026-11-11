@@ -26,6 +26,22 @@ Write ONE pytest test that proves the bug from the report.
   - SQL injection: pass `"x' OR '1'='1"` and assert no rows come back.
   - Path traversal: pass `"../secret.txt"` and assert it is rejected.
 
+## Extra rules (added after rounds 2 and 4 failed)
+
+- The input must satisfy EVERY other condition in the docstring, so only the reported bug
+  matters. For "at least 8 characters and at least one digit", test the length with
+  "abcdefg1", not "abcdefgh".
+- SQL tests: never pass None as db. Build a real database inside the test:
+
+def test_find_user_sql_injection():
+    import sqlite3
+    db = sqlite3.connect(":memory:")
+    db.execute("CREATE TABLE users (username TEXT)")
+    db.execute("INSERT INTO users VALUES ('ana')")
+    assert find_user(db, "x' OR '1'='1") is None
+
+- Hardcoded password: assert check_admin("admin123") == False
+
 ## Rules
 
 - Exactly one function, its name starts with `test_`.
